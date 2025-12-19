@@ -1,8 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package car_rental;
+package TheCarRental;
 
 /**
  *
@@ -18,11 +14,34 @@ public class Van extends Vehicle {
     public Van(String model, String company, Date date, Date entryDate, String color,
                String status, char vehicleClass, int pricePerDay, int pricePerHour, int pricePerMonth,
                int cargoCapacity, int numberOfSeats, boolean refrigerated) {
-
-        super(model, company, date, entryDate, color, status, vehicleClass, pricePerDay, pricePerHour, pricePerMonth);
+        
+        super(model, company, date, entryDate, color, status, vehicleClass, 
+              pricePerDay, pricePerHour, pricePerMonth);
         this.cargoCapacity = cargoCapacity;
         this.numberOfSeats = numberOfSeats;
         this.refrigerated = refrigerated;
+    }
+
+    // abstract methods implementation
+    @Override
+    public int calculateSpecificPrice(int days, int hours) {
+        // Van-specific pricing: refrigerated vans cost more
+        int basePrice = calculateDefaultPrice(days, hours);
+        if (refrigerated) {
+            return (int)(basePrice * 1.2); // 20% premium for refrigerated
+        }
+        return basePrice;
+    }
+    
+    @Override
+    public String getVehicleCategory() {
+        return "Commercial Van (" + vehicleClass + " Class)";
+    }
+    
+    @Override
+    public String getSpecifications() {
+        return String.format("Cargo: %dkg | Seats: %d | Refrigerated: %s",
+                cargoCapacity, numberOfSeats, refrigerated ? "Yes" : "No");
     }
 
     @Override

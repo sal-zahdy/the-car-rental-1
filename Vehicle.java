@@ -1,8 +1,8 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ * Abstract Vehicle class for TheCarRental system
+ * Provides common functionality for all vehicle types
  */
-package car_rental;
+package TheCarRental;
 
 /**
  *
@@ -10,23 +10,26 @@ package car_rental;
  */
 import java.util.Date;
 
-public class Vehicle implements Comparable<Vehicle> {
-    private String model;
-    private String company;
-    private Date date;
-    private Date entryDate;
-    private String color;
-    private String status;
-    private boolean available = true;
-    private char vehicleClass;
-    private int pricePerDay;
-    private int pricePerHour;
-    private int pricePerMonth;
+public abstract class Vehicle implements Comparable<Vehicle> {
+    
+    protected String model;
+    protected String company;
+    protected Date date;
+    protected Date entryDate;
+    protected String color;
+    protected String status;
+    protected boolean available = true;
+    protected char vehicleClass;
+    protected int pricePerDay;
+    protected int pricePerHour;
+    protected int pricePerMonth;
 
-    public Vehicle() {}
+    
+    protected Vehicle() {}
 
-    public Vehicle(String model, String company, Date date, Date entryDate, String color,
-                   String status, char vehicleClass, int pricePerDay, int pricePerHour, int pricePerMonth) {
+    protected Vehicle(String model, String company, Date date, Date entryDate, String color,
+                      String status, char vehicleClass, int pricePerDay, int pricePerHour, 
+                      int pricePerMonth) {
         this.model = model;
         this.company = company;
         this.date = date;
@@ -38,8 +41,42 @@ public class Vehicle implements Comparable<Vehicle> {
         this.pricePerHour = pricePerHour;
         this.pricePerMonth = pricePerMonth;
     }
+    //abstract methods
+    public abstract int calculateSpecificPrice(int days, int hours);
+    
+    public abstract String getVehicleCategory();
+    
+    public abstract String getSpecifications();
+    
 
-    // getters & setters
+    // concrete methods
+    
+    // price calculation for all but can be ovverriden for a vehicle that has smth special
+    public int calculatePrice(int days, int hours) {
+        return calculateSpecificPrice(days, hours);
+    }
+    protected int calculateDefaultPrice(int days, int hours) {
+        return days * pricePerDay + hours * pricePerHour;
+    }
+    
+    // Comparable default: by model (A -> Z)
+    @Override
+    public int compareTo(Vehicle other) {
+        if (this.model == null && other.model == null) return 0;
+        if (this.model == null) return -1;
+        if (other.model == null) return 1;
+        return this.model.compareToIgnoreCase(other.model);
+    }
+    
+    // displaying the vehicle info
+    @Override
+    public String toString() {
+        return String.format("[%s | %s] Color:%s Status:%s Avail:%s Class:%c Price/day:%d Price/hr:%d",
+                model, company, color, status, available ? "Yes" : "No", 
+                vehicleClass, pricePerDay, pricePerHour);
+    }
+    
+    // setters and getters
     public String getModel() { return model; }
     public String getCompany() { return company; }
     public Date getDate() { return date; }
@@ -58,24 +95,4 @@ public class Vehicle implements Comparable<Vehicle> {
     public void setPricePerHour(int pricePerHour) { this.pricePerHour = pricePerHour; }
     public void setPricePerMonth(int pricePerMonth) { this.pricePerMonth = pricePerMonth; }
     public void setColor(String color) { this.color = color; }
-
-    // default price calc
-    public int calculatePrice(int days, int hours) {
-        return days * pricePerDay + hours * pricePerHour;
-    }
-
-    // Comparable default: by model (A -> Z)
-    @Override
-    public int compareTo(Vehicle other) {
-        if (this.model == null && other.model == null) return 0;
-        if (this.model == null) return -1;
-        if (other.model == null) return 1;
-        return this.model.compareToIgnoreCase(other.model);
-    }
-
-    @Override
-    public String toString() {
-        return String.format("[%s | %s] Color:%s Status:%s Avail:%s Class:%c Price/day:%d Price/hr:%d",
-                model, company, color, status, available ? "Yes" : "No", vehicleClass, pricePerDay, pricePerHour);
-    }
 }

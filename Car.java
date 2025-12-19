@@ -1,13 +1,5 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package car_rental;
+package TheCarRental;
 
-/**
- *
- * @author Alzah
- */
 import java.util.Date;
 
 public class Car extends Vehicle {
@@ -17,12 +9,34 @@ public class Car extends Vehicle {
     public Car(String model, String company, Date date, Date entryDate, String color,
                String status, char vehicleClass, int pricePerDay, int pricePerHour, int pricePerMonth,
                int numberOfSeats, String fuelType) {
-
-        super(model, company, date, entryDate, color, status, vehicleClass, pricePerDay, pricePerHour, pricePerMonth);
+        
+        super(model, company, date, entryDate, color, status, vehicleClass, 
+              pricePerDay, pricePerHour, pricePerMonth);
         this.numberOfSeats = numberOfSeats;
         this.fuelType = fuelType;
     }
 
+    // abstract methods implementation
+    @Override
+    public int calculateSpecificPrice(int days, int hours) {
+        if (hours > 0 && days == 0) {
+            return Math.max(pricePerDay, hours * pricePerHour);
+        }
+        return calculateDefaultPrice(days, hours);
+    }
+    
+    @Override
+    public String getVehicleCategory() {
+        return "Passenger Car (" + vehicleClass + " Class)";
+    }
+    
+    @Override
+    public String getSpecifications() {
+        return String.format("Seats: %d | Fuel: %s", numberOfSeats, fuelType);
+    }
+
+    // addition of specific data feilds
+    
     public int getNumberOfSeats() { return numberOfSeats; }
     public String getFuelType() { return fuelType; }
 
@@ -31,4 +45,3 @@ public class Car extends Vehicle {
         return "Car " + super.toString() + String.format(" Seats:%d Fuel:%s", numberOfSeats, fuelType);
     }
 }
-
