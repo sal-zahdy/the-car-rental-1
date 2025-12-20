@@ -10,6 +10,9 @@ public class Van extends Vehicle {
     private int cargoCapacity;
     private int numberOfSeats;
     private boolean refrigerated;
+    
+    // Add constant for refrigerated premium
+    private static final double REFRIGERATED_PREMIUM = 1.2;
 
     public Van(String model, String company, Date date, Date entryDate, String color,
                String status, char vehicleClass, int pricePerDay, int pricePerHour, int pricePerMonth,
@@ -28,7 +31,8 @@ public class Van extends Vehicle {
         // Van-specific pricing: refrigerated vans cost more
         int basePrice = calculateDefaultPrice(days, hours);
         if (refrigerated) {
-            return (int)(basePrice * 1.2); // 20% premium for refrigerated
+            // FIXED: Use constant instead of magic number
+            return (int)(basePrice * REFRIGERATED_PREMIUM); // 20% premium for refrigerated
         }
         return basePrice;
     }

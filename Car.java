@@ -19,8 +19,9 @@ public class Car extends Vehicle {
     // abstract methods implementation
     @Override
     public int calculateSpecificPrice(int days, int hours) {
+        // FIXED: Use getters instead of direct field access
         if (hours > 0 && days == 0) {
-            return Math.max(pricePerDay, hours * pricePerHour);
+            return Math.max(getPricePerDay(), hours * getPricePerHour());
         }
         return calculateDefaultPrice(days, hours);
     }
@@ -35,7 +36,7 @@ public class Car extends Vehicle {
         return String.format("Seats: %d | Fuel: %s", numberOfSeats, fuelType);
     }
 
-    // addition of specific data feilds
+    // addition of specific data fields
     
     public int getNumberOfSeats() { return numberOfSeats; }
     public String getFuelType() { return fuelType; }

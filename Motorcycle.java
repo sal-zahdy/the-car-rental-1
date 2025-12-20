@@ -9,6 +9,9 @@ import java.util.Date;
 public class Motorcycle extends Vehicle {
     private String fuelType;
     private String transmissionType;
+    
+    // Add constant for short rental threshold
+    private static final int SHORT_RENTAL_HOURS = 2;
 
     public Motorcycle(String model, String company, Date date, Date entryDate, String color,
                       String status, char vehicleClass, int pricePerDay, int pricePerHour, int pricePerMonth,
@@ -24,8 +27,9 @@ public class Motorcycle extends Vehicle {
     @Override
     public int calculateSpecificPrice(int days, int hours) {
         // Motorcycle-specific pricing: hourly rate for short rentals
-        if (hours <= 2) {
-            return hours * pricePerHour; // No daily minimum for short rentals
+        // FIXED: Use constant and getter
+        if (hours <= SHORT_RENTAL_HOURS && days == 0) {
+            return hours * getPricePerHour(); // No daily minimum for short rentals
         }
         return calculateDefaultPrice(days, hours);
     }
