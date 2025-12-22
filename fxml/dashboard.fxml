@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.geometry.Insets?>
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.carrentalba2a.controller.DashboardController">
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <top>
+        <VBox spacing="10" alignment="CENTER">
+            <Label fx:id="welcomeLabel" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+            <HBox spacing="30" alignment="CENTER">
+                <Label fx:id="currentRentsLabel"/>
+                <Label fx:id="totalRentsLabel"/>
+            </HBox>
+        </VBox>
+    </top>
+
+    <center>
+        <VBox spacing="15" alignment="CENTER">
+            <padding>
+                <Insets top="30" right="0" bottom="0" left="0"/>
+            </padding>
+
+            <Button text="Rent a Car" prefWidth="300" onAction="#handleRentCar"/>
+            <Button text="Rent a Van" prefWidth="300" onAction="#handleRentVan"/>
+            <Button text="Rent a Motorcycle" prefWidth="300" onAction="#handleRentMotorcycle"/>
+            <Button text="My Rentals" prefWidth="300" onAction="#handleMyRentals"/>
+            <Button text="My Profile" prefWidth="300" onAction="#handleProfile"/>
+            <Button text="Logout" prefWidth="300" onAction="#handleLogout"/>
+        </VBox>
+    </center>
+</BorderPane>
